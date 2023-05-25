@@ -1,4 +1,4 @@
-#!/home/jake/desktop/git/Sahel_Rainfall/.ve_Sahel_Rainfall/bin/python
+#!/Users/jake/Desktop/Git/Sahel_Rainfall/.ve_sahel_rainfall/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
