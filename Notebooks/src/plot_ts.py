@@ -38,6 +38,11 @@ def plot_ts(true, predicted, ts_start, ts_end):
 
 
 def plot_loss(history):
+    """This function plots the loss of a Tensorflow model.
+
+    Args:
+        history (_type_): The history from model.fit
+    """
     fig = make_subplots(specs=[[{"secondary_y": True}]], subplot_titles=['MSE loss'], x_title='Epochs')
     fig.add_trace(
         go.Scatter(
@@ -60,6 +65,11 @@ def plot_loss(history):
     fig.show()
 
 def plot_correlation(history):
+    """This function plots the correlation coefficient of a Tensorflow model.
+
+    Args:
+        history (_type_): The history from model.fit
+    """
     fig = make_subplots(specs=[[{"secondary_y": True}]], subplot_titles=['Correlation'], x_title='Epochs')
     fig.add_trace(
         go.Scatter(
