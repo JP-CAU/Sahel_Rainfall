@@ -4,6 +4,9 @@
 .ve_sahel_rainfall/
 
 **/.ve_*/*
+**/darts_logs/*
+**/models/*
+
 
 ##
 ## Add custom entries below here.
