@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 
-def plot_ts(true, predicted, ts_start, ts_end):
+def plot_ts(true, predicted, ts_start, ts_end, title="", persist=False, html_title=""):
     """This function plots the prediction of a timeseries versus the real series.
 
     Args:
@@ -32,12 +32,16 @@ def plot_ts(true, predicted, ts_start, ts_end):
             opacity=1,
         )
     )
+    fig.update_layout(
+        title = title
+    )
 
     fig.show()
-    pass
+    if persist:
+        fig.write_html(html_title)
 
 
-def plot_loss(history):
+def plot_loss(history, persist=False, title=""):
     """This function plots the loss of a Tensorflow model.
 
     Args:
@@ -63,8 +67,10 @@ def plot_loss(history):
     )
 
     fig.show()
+    if persist:
+        fig.write_html(title)
 
-def plot_correlation(history):
+def plot_correlation(history, persist=False, title=""):
     """This function plots the correlation coefficient of a Tensorflow model.
 
     Args:
@@ -89,3 +95,5 @@ def plot_correlation(history):
         )
     )
     fig.show()
+    if persist:
+        fig.write_html(title)

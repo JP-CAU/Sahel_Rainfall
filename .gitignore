@@ -6,6 +6,10 @@
 **/.ve_*/*
 **/darts_logs/*
 **/models/*
+**/Notebooks/excel/*
+**/Notebooks/html_files/*
+**/Notebooks/model_csvs/*
+**/Notebooks/png/*
 
 
 ##
