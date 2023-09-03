@@ -200,6 +200,7 @@ class Data:
                 ],
                 inplace=True
             )
+
         one_hot_encoded = pd.get_dummies(
             climind.index.codes[2], prefix="month", dtype=int
         )

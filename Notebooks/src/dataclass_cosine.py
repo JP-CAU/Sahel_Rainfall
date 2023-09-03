@@ -215,6 +215,7 @@ class Data:
                 ],
                 inplace=True,
             )
+
         climind["cosine_month"] = self.cosine_encode_month(climind.index.codes[2])
 
         FOCI = climind.loc[("FOCI")].reset_index().drop(columns=["year", "month"])
