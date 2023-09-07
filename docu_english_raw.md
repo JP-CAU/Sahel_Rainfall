@@ -58,7 +58,6 @@ Optimized models:
 - LSTM
 - CNN + LSTM
 - XG Boost
-- Light GBM
 
 The initial step involved feature engineering with the objective of enhancing the model's forecasting performance. Various novel features were experimented with, and their impact on both climate models and all lead times was evaluated. Due to the time-intensive nature of this step, performance evaluations were exclusively conducted on the most promising model type, namely LSTM. It's worth noting that the results might have differed if applied to other model types.
 
@@ -88,44 +87,6 @@ Remarkably, the results of hyperparameter tuning revealed minimal to negligible 
 However, it's worth noting that due to time constraints, hyperparameter tuning was not carried out for the tree-based approaches.
 
 ### Optimization Jannik
-Optimized models:
- - (attention) RNN
- - (attention) LSTM
- - adaboost
- - random forest
-
-To have reliable results the random seed was fixed for each experiment.
-
-The initial models were rather small as the hope was to reduce the overfitting, however this lead to problems during higher lead times where the models would barely learn if at all.
-Due to this the model size was increased until the models managed to handle larger lead times before any other optimization was even tested.
-
-The first step for the optimization of the models was the feature selection. 
-For this a random forest was trained and its feature ranking extracted. Since for each month that was used as an input contained 28 (or 29 for lead times bigger than 0) features, the importance of a feature would be summed up across all months to obtain a ranking of features. Additionally all features of a month would be summed up to obtain the importance for each month in the sequence. 
-Changing the lead time or the sequence length also changed the ranking of the features. Different lead times also had different importances for months in the sequence. In the case of lead time 0 the current month was by far the most important one, while for larger lead times the other months slowly increased in their importance.
-Due to the different rankings based on changes in sequence length and lead time, a sequence length was determined for each lead time by training a model for a given set of sequence lengths and evaluating it using its MSE.
-After this forward, as well as backward selection was tested. Forward selection outperformed backward selection at a lead time of 0 while also having a faster runtime, so it was chosen going forward. All features were used if the selection did not improve the performance of the model.
-Additionally it was decided to select features based on the correlation coefficient instead of MSE. This was due to a model with a lower MSE sometimes having a worse correlation coefficient. 
-Lastly after testing the selected features on different models (RNN and LSTM namely) it could be observed, that the selection lowered their performance. However their performance could be improved by performing the feature selection using the respective model.
-The main results of the feature selection were the following:
- - for each lead time a sequence length has to be determined first
- - then for each lead time the features can be selected based on the correlation coefficient
- - selection was done using forward selection
- - selected features of one model do not necessarly work for another model
-
- Since adding the month to the features seemed to improve the performance different encodings of the month were tested: month as integer, one hot encoded, one hot encoded and scaled to have a mean of 0 and std of 1. As with the feature selection different models and different lead times influenced how the different encodings performed. This again leaves one with the informatino, that:
-  - the optimal encoding depends on the lead time and model
-
-To search for fitting hyper parameters ray tune was utilized to perform a grid search. 
-At first the grid search also contained multiple activation functions, namely ReLU, LeakyReLU and Tanh, however since ReLU always ended up performing best in later grid searches only ReLU was used. The number of neurons and number of layers were searched for while some hyper parameters werde fixed and using all features. The sequence length was fixed, the learning rate was set to 0.001 and a weight decay of 0 was used. The grid search was performed using a lead time of 1, it most likely would have been better to search for a different set of hyper parameters for each lead time, however this would have also taken a fairly long time.
-After the first grid search a second one was used to determine the learning rate and weight decay, however the best values seemed to be the initial ones which could be due to the other hyper parameters being chosen depending on them. Nonetheless two grid searches instead of one were performed to keep the required time low. Dropout was not searched for as in previous tests it did not seem to increase performance. For the attention networks it was also tested how many attention heads should be used. 
-
-The resulting optimization pipeline was as follows:
-First the grid search was performed, followed by the search of a fitting sequence length for every lead time. Afterwards forward selection was performed for every lead time followed by finding the best encoding. Lastly the final evaluation was done.
-
-During optimization models were always evaluated on the validation set and only the final evaluation utilized the test set.
-
-Additionally a larger validation set was testen on the lstm for lead times 0 and 1, which improved the performance for lead time 1.
-Pre training on one of the two data sets was also tested for a lead time of 1. For FOCI this ended up in as a rather large correlation coefficient improvement, however it slightly decreased the performance for CESM.
 
 ## Results
-The results reveal that optimization yielded benefits for most configurations. However, due to substantial variations in performance driven by factors like lead time, sequence length, and climate model choice, the models did not uniformly enhance their performance across all configurations. Interestingly, improvements in performance for the FOCI climate model occasionally corresponded to decreases in performance for the CESM climate model, and vice versa. As expected larger lead times were harder to predict. The final results can be found in table 2.
+The results reveal that optimization yielded benefits for most configurations. However, due to substantial variations in performance driven by factors like lead time, sequence length, and climate model choice, the models did not uniformly enhance their performance across all configurations. Interestingly, improvements in performance for the FOCI climate model occasionally corresponded to decreases in performance for the CESM climate model, and vice versa. The final results can be found in table 2.
