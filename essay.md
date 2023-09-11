@@ -1,5 +1,5 @@
 # Research Question
-Are machine learning models able to precisely predict the rainfall in the Sahe region in africa?
+Are machine learning models able to precisely predict the rainfall in the Sahel region in africa?
 
 ## Objective
 The primary objective of the project was to achieve highly accurate predictions of rainfall in Africa's Sahel region. These predictions were required for various lead times, with "lead time" denoting the duration between when a forecast is generated and when it becomes pertinent or is put into use within the context of time series forecasting. The specific lead times of interest in this project were zero, one, three, and six.
@@ -170,3 +170,5 @@ The results reveal that optimization yielded benefits for most configurations. H
 At the project's outset, a well-defined milestone plan was established with the initial objectives of identifying promising machine learning models and establishing a performance baseline. In the subsequent phase of the project, the focus shifted towards optimizing the most promising models. Although the incorporation of explainable AI was designated as an optional task, it was ultimately deemed unattainable within the project's time constraints. Other than that the project adhered closely to its outlined plan.
 
 # Learnings
+What would we do differently next time:
+- Stick to best practices to keep the github repository as clean as possible. During the project the github repositories started to get messy when running more and more experiences. Refactoring the code and cleaning up the repository would be a lot of work now. Next time we would stick to clear conventions.
